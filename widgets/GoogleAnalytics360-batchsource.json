@@ -1,0 +1,230 @@
+{
+  "metadata": {
+    "spec-version": "1.0"
+  },
+  "configuration-groups": [
+    {
+      "label": "General",
+      "properties": [
+        {
+          "widget-type": "textbox",
+          "label": "Reference Name",
+          "name": "referenceName",
+          "widget-attributes": {
+            "placeholder": "Name used to identify this source for lineage"
+          }
+        },
+        {
+          "widget-type": "textbox",
+          "label": "Authorization token",
+          "name": "authorizationToken",
+          "widget-attributes": {
+            "placeholder": "Authorization token to access Google Analytics reporting API"
+          }
+        },
+        {
+          "widget-type": "textbox",
+          "label": "Google Analytics View",
+          "name": "viewId",
+          "widget-attributes": {
+            "placeholder": "The Google Analytics view ID from which to retrieve data"
+          }
+        }
+      ]
+    },
+    {
+      "label": "Basic",
+      "properties": [
+        {
+          "widget-type": "textbox",
+          "label": "Start Date",
+          "name": "startDate",
+          "widget-attributes": {
+            "placeholder": "Start date for the report data"
+          }
+        },
+        {
+          "widget-type": "textbox",
+          "label": "End Date",
+          "name": "endDate",
+          "widget-attributes": {
+            "placeholder": "End date for the report data"
+          }
+        },
+        {
+          "widget-type": "multi-select",
+          "label": "Metrics",
+          "name": "metricsList",
+          "widget-attributes": {
+            "delimiter": ",",
+            "options": [
+              {
+                "id": "ga:users",
+                "label": "Users"
+              },
+              {
+                "id": "ga:newUsers",
+                "label": "New Users"
+              },
+              {
+                "id": "ga:percentNewSessions",
+                "label": "% New Sessions"
+              },
+              {
+                "id": "ga:1dayUsers",
+                "label": "1 Day Active Users"
+              },
+              {
+                "id": "ga:7dayUsers",
+                "label": "7 Day Active Users"
+              },
+              {
+                "id": "ga:14dayUsers",
+                "label": "14 Day Active Users"
+              },
+              {
+                "id": "ga:28dayUsers",
+                "label": "28 Day Active Users"
+              },
+              {
+                "id": "ga:30dayUsers",
+                "label": "30 Day Active Users"
+              },
+              {
+                "id": "ga:sessionsPerUser",
+                "label": "Number of Sessions per User"
+              },
+              {
+                "id": "ga:sessions",
+                "label": "Sessions"
+              },
+              {
+                "id": "ga:bounces",
+                "label": "Bounces"
+              },
+              {
+                "id": "ga:bounceRate",
+                "label": "Bounce Rate"
+              },
+              {
+                "id": "ga:sessionDuration",
+                "label": "Session Duration"
+              },
+              {
+                "id": "ga:avgSessionDuration",
+                "label": "Avg. Session Duration"
+              },
+              {
+                "id": "ga:uniqueDimensionCombinations",
+                "label": "Unique Dimension Combinations"
+              },
+              {
+                "id": "ga:hits",
+                "label": "Hits"
+              },
+              {
+                "id": "ga:organicSearches",
+                "label": "Organic Searches"
+              },
+              {
+                "id": "ga:impressions",
+                "label": "Impressions"
+              },
+              {
+                "id": "ga:adClicks",
+                "label": "Clicks"
+              },
+              {
+                "id": "ga:adCost",
+                "label": "Cost"
+              },
+              {
+                "id": "ga:CPM",
+                "label": "CPM"
+              },
+              {
+                "id": "ga:CPC",
+                "label": "CPC"
+              },
+              {
+                "id": "ga:CTR",
+                "label": "CTR"
+              },
+              {
+                "id": "ga:costPerTransaction",
+                "label": "Cost per Transaction"
+              },
+              {
+                "id": "ga:costPerGoalConversion",
+                "label": "Cost per Goal Conversion"
+              },
+              {
+                "id": "ga:costPerConversion",
+                "label": "Cost per Conversion"
+              },
+              {
+                "id": "ga:RPC",
+                "label": "RPC"
+              },
+              {
+                "id": "ga:ROAS",
+                "label": "ROAS"
+              },
+              {
+                "id": "value2",
+                "label": "New Users"
+              }
+            ]
+          }
+        },
+        {
+          "widget-type": "multi-select",
+          "label": "Dimensions",
+          "name": "dimensionsList",
+          "widget-attributes": {
+            "values": [
+              "GET",
+              "POST",
+              "PUT",
+              "DELETE",
+              "HEAD"
+            ],
+            "default": "GET"
+          }
+        }
+      ]
+    },
+    {
+      "label": "Advanced\n(for batch only)",
+      "properties": [
+        {
+          "widget-type": "select",
+          "label": "Sampling Level",
+          "name": "sampleSize",
+          "widget-attributes": {
+            "values": [
+              "DEFAULT",
+              "SMALL",
+              "LARGE"
+            ],
+            "default": "DEFAULT"
+          }
+        }
+      ]
+    }
+  ],
+  "jump-config": {
+    "datasets": [
+      {
+        "ref-property-name": "referenceName"
+      }
+    ]
+  },
+  "outputs": [
+    {
+      "widget-type": "non-editable-schema-editor",
+      "schema": {
+      }
+    }
+  ]
+}
