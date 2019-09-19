@@ -18,6 +18,7 @@ package io.cdap.plugin.ga360.source.common;
 
 import com.google.common.collect.Sets;
 import io.cdap.cdap.api.data.schema.Schema;
+
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -31,8 +32,8 @@ public class SchemaBuilder {
     Set<String> schemaFields = Sets.newHashSet(metrics);
     schemaFields.addAll(dimensions);
     return Schema.recordOf("GoogleAnalytics360Reports",
-        schemaFields.stream()
-            .map(name -> Schema.Field.of(name, Schema.nullableOf(Schema.of(Schema.Type.STRING))))
-            .collect(Collectors.toList()));
+                           schemaFields.stream()
+                             .map(name -> Schema.Field.of(name, Schema.nullableOf(Schema.of(Schema.Type.STRING))))
+                             .collect(Collectors.toList()));
   }
 }

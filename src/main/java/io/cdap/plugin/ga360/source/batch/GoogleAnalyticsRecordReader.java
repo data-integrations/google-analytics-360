@@ -24,15 +24,16 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import io.cdap.plugin.ga360.source.common.requests.AnalyticsReportingInitializer;
 import io.cdap.plugin.ga360.source.common.requests.ReportsRequestFactory;
-import java.io.IOException;
-import java.security.GeneralSecurityException;
-import java.util.Collections;
-import java.util.List;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.mapreduce.InputSplit;
 import org.apache.hadoop.mapreduce.RecordReader;
 import org.apache.hadoop.mapreduce.TaskAttemptContext;
+
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * RecordReader implementation, which reads {@link Report} instances from Google Analytics reporting API using
@@ -57,14 +58,14 @@ public class GoogleAnalyticsRecordReader extends RecordReader<NullWritable, Repo
       // Create the GetReportsRequest object.
       List<ReportRequest> reportRequests = Collections.singletonList(reportRequest);
       GetReportsRequest getReport = new GetReportsRequest()
-          .setReportRequests(reportRequests);
+        .setReportRequests(reportRequests);
 
       // Call the batchGet method.
       GetReportsResponse response = AnalyticsReportingInitializer.initializeAnalyticsReporting()
-          .reports()
-          .batchGet(getReport)
-          .setAccessToken(gaConfig.getAuthorizationToken())
-          .execute();
+        .reports()
+        .batchGet(getReport)
+        .setAccessToken(gaConfig.getAuthorizationToken())
+        .execute();
 
       currentReport = response.getReports().get(0);
     } catch (GeneralSecurityException e) {

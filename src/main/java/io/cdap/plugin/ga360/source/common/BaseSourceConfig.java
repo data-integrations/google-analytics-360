@@ -30,20 +30,18 @@ public class BaseSourceConfig extends ReferencePluginConfig {
 
   public static final String AUTHORIZATION_TOKEN = "authorizationToken";
   public static final String GOOGLE_ANALYTICS_VIEW = "viewId";
-
-  public BaseSourceConfig(String referenceName) {
-    super(referenceName);
-  }
-
   @Name(AUTHORIZATION_TOKEN)
   @Description("Authorization token to access Google Analytics reporting API")
   @Macro
   protected String authorizationToken;
-
   @Name(GOOGLE_ANALYTICS_VIEW)
   @Description("The Google Analytics view ID from which to retrieve data")
   @Macro
   protected String viewId;
+
+  public BaseSourceConfig(String referenceName) {
+    super(referenceName);
+  }
 
   public String getAuthorizationToken() {
     return authorizationToken;
@@ -56,13 +54,13 @@ public class BaseSourceConfig extends ReferencePluginConfig {
   public void validate(FailureCollector failureCollector) {
     if (Strings.isNullOrEmpty(authorizationToken)) {
       failureCollector
-          .addFailure(String.format("%s must be specified.", AUTHORIZATION_TOKEN), null)
-          .withConfigProperty(AUTHORIZATION_TOKEN);
+        .addFailure(String.format("%s must be specified.", AUTHORIZATION_TOKEN), null)
+        .withConfigProperty(AUTHORIZATION_TOKEN);
     }
     if (Strings.isNullOrEmpty(viewId)) {
       failureCollector
-          .addFailure(String.format("%s must be specified.", GOOGLE_ANALYTICS_VIEW), null)
-          .withConfigProperty(GOOGLE_ANALYTICS_VIEW);
+        .addFailure(String.format("%s must be specified.", GOOGLE_ANALYTICS_VIEW), null)
+        .withConfigProperty(GOOGLE_ANALYTICS_VIEW);
     }
   }
 }

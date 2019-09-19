@@ -19,6 +19,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import io.cdap.cdap.api.data.batch.InputFormatProvider;
+
 import java.util.Map;
 
 /**
@@ -32,8 +33,8 @@ public class GoogleAnalyticsFormatProvider implements InputFormatProvider {
 
   public GoogleAnalyticsFormatProvider(GoogleAnalyticsConfig config) {
     this.conf = new ImmutableMap.Builder<String, String>()
-        .put(PROPERTY_CONFIG_JSON, gson.toJson(config))
-        .build();
+      .put(PROPERTY_CONFIG_JSON, gson.toJson(config))
+      .build();
   }
 
   @Override

@@ -31,8 +31,9 @@ import io.cdap.cdap.etl.api.batch.BatchSource;
 import io.cdap.cdap.etl.api.batch.BatchSourceContext;
 import io.cdap.plugin.common.LineageRecorder;
 import io.cdap.plugin.ga360.source.common.ReportTransformer;
-import java.util.stream.Collectors;
 import org.apache.hadoop.io.NullWritable;
+
+import java.util.stream.Collectors;
 
 /**
  * Plugin returns records from Google Analytics Reporting API V4.
@@ -54,9 +55,9 @@ public class GoogleAnalyticsBatchSource extends BatchSource<NullWritable, Report
     LineageRecorder lineageRecorder = new LineageRecorder(batchSourceContext, config.referenceName);
     lineageRecorder.createExternalDataset(config.getSchema());
     lineageRecorder.recordRead("Read", "Reading Google Analytics reports",
-        Preconditions.checkNotNull(config.getSchema().getFields()).stream()
-            .map(Schema.Field::getName)
-            .collect(Collectors.toList()));
+                               Preconditions.checkNotNull(config.getSchema().getFields()).stream()
+                                 .map(Schema.Field::getName)
+                                 .collect(Collectors.toList()));
 
     batchSourceContext.setInput(Input.of(config.referenceName, new GoogleAnalyticsFormatProvider(config)));
   }

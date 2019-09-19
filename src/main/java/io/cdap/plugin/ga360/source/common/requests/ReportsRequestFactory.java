@@ -20,6 +20,7 @@ import com.google.api.services.analyticsreporting.v4.model.Dimension;
 import com.google.api.services.analyticsreporting.v4.model.Metric;
 import com.google.api.services.analyticsreporting.v4.model.ReportRequest;
 import io.cdap.plugin.ga360.source.batch.GoogleAnalyticsConfig;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -41,23 +42,23 @@ public class ReportsRequestFactory {
     // Create the Metrics list.
     List<String> metricsList = config.getMetricsList();
     List<Metric> metrics = metricsList.stream()
-        .map(metric -> new Metric()
-            .setExpression(metric))
-        .collect(Collectors.toList());
+      .map(metric -> new Metric()
+        .setExpression(metric))
+      .collect(Collectors.toList());
 
     // Create the Dimensions list.
     List<String> dimensionsList = config.getDimensionsList();
     List<Dimension> dimensions = dimensionsList.stream()
-        .map(dimension -> new Dimension()
-            .setName(dimension))
-        .collect(Collectors.toList());
+      .map(dimension -> new Dimension()
+        .setName(dimension))
+      .collect(Collectors.toList());
 
     // Create the ReportRequest object.
     ReportRequest reportRequest = new ReportRequest()
-        .setViewId(config.getViewId())
-        .setDateRanges(Collections.singletonList(dateRange))
-        .setMetrics(metrics)
-        .setDimensions(dimensions);
+      .setViewId(config.getViewId())
+      .setDateRanges(Collections.singletonList(dateRange))
+      .setMetrics(metrics)
+      .setDimensions(dimensions);
     if (config.getSampleSize() != null) {
       reportRequest.setSamplingLevel(config.getSampleSize());
     }

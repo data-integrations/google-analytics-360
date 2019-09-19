@@ -21,6 +21,7 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.analyticsreporting.v4.AnalyticsReporting;
 import io.cdap.plugin.ga360.source.batch.GoogleAnalyticsBatchSource;
+
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
@@ -43,7 +44,7 @@ public class AnalyticsReportingInitializer {
 
     // Construct the Analytics Reporting service object.
     return new AnalyticsReporting.Builder(httpTransport, JSON_FACTORY, null)
-        .setApplicationName(GoogleAnalyticsBatchSource.NAME)
-        .build();
+      .setApplicationName(GoogleAnalyticsBatchSource.NAME)
+      .build();
   }
 }

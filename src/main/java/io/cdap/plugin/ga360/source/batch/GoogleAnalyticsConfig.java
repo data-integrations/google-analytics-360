@@ -23,6 +23,7 @@ import io.cdap.cdap.api.data.schema.Schema;
 import io.cdap.cdap.etl.api.FailureCollector;
 import io.cdap.plugin.ga360.source.common.BaseSourceConfig;
 import io.cdap.plugin.ga360.source.common.SchemaBuilder;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -38,35 +39,30 @@ public class GoogleAnalyticsConfig extends BaseSourceConfig {
   public static final String METRICS = "metricsList";
   public static final String DIMENSIONS = "dimensionsList";
   public static final String SAMPLING_LEVEL = "sampleSize";
-  private transient Schema schema = null;
-
   @Name(START_DATE)
   @Description("Start date for the report data")
   @Macro
   protected String startDate;
-
   @Name(END_DATE)
   @Description("End date for the report data")
   @Macro
   protected String endDate;
-
   @Name(METRICS)
   @Description("Quantitative measurements. For example, "
-      + "the metric ga:users indicates the total number of users for the requested time period")
+    + "the metric ga:users indicates the total number of users for the requested time period")
   @Macro
   protected String metricsList;
-
   @Name(DIMENSIONS)
   @Description("Attributes of your data. For example, "
-      + "the dimension ga:city indicates the city, for example, \"Paris\" or \"New York\"")
+    + "the dimension ga:city indicates the city, for example, \"Paris\" or \"New York\"")
   @Macro
   protected String dimensionsList;
-
   @Name(SAMPLING_LEVEL)
   @Description("Desired report sample size")
   @Nullable
   @Macro
   protected String sampleSize;
+  private transient Schema schema = null;
 
   public GoogleAnalyticsConfig(String referenceName) {
     super(referenceName);

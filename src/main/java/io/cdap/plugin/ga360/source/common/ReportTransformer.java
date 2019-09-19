@@ -21,11 +21,18 @@ import com.google.api.services.analyticsreporting.v4.model.Report;
 import com.google.api.services.analyticsreporting.v4.model.ReportRow;
 import io.cdap.cdap.api.data.format.StructuredRecord;
 import io.cdap.cdap.api.data.schema.Schema;
+
 import java.util.List;
 import java.util.stream.IntStream;
 
+/**
+ * This is helper class for transforming {@link Report} instance to {@link StructuredRecord}.
+ */
 public class ReportTransformer {
 
+  /**
+   * Transforms {@link Report} instance to {@link StructuredRecord} instance accordingly to given schema.
+   */
   public static StructuredRecord transform(Report report, Schema schema) {
     StructuredRecord.Builder builder = StructuredRecord.builder(schema);
     transformMetrics(report, schema, builder);
@@ -39,12 +46,13 @@ public class ReportTransformer {
     rows.forEach(row -> {
       List<DateRangeValues> rowMetrics = row.getMetrics();
       IntStream.range(0, rowMetrics.size())
-          .forEach(i -> {
-            MetricHeaderEntry metricHeaderEntry = metricHeaderEntries.get(i);
-            if (schemaContainsField(schema, metricHeaderEntry.getName())) {
-              builder.set(metricHeaderEntry.getName(), rowMetrics.get(i).getValues().get(0)); //FIXME use date ranges for metrics
-            }
-          });
+        .forEach(i -> {
+          MetricHeaderEntry metricHeaderEntry = metricHeaderEntries.get(i);
+          if (schemaContainsField(schema, metricHeaderEntry.getName())) {
+            //TODO use date ranges for metrics
+            builder.set(metricHeaderEntry.getName(), rowMetrics.get(i).getValues().get(0));
+          }
+        });
     });
   }
 
@@ -54,12 +62,12 @@ public class ReportTransformer {
     rows.forEach(row -> {
       List<String> rowDimensions = row.getDimensions();
       IntStream.range(0, rowDimensions.size())
-          .forEach(i -> {
-            String columnHeader = dimensions.get(i);
-            if (schemaContainsField(schema, columnHeader)) {
-              builder.set(columnHeader, rowDimensions.get(i));
-            }
-          });
+        .forEach(i -> {
+          String columnHeader = dimensions.get(i);
+          if (schemaContainsField(schema, columnHeader)) {
+            builder.set(columnHeader, rowDimensions.get(i));
+          }
+        });
     });
   }
 
