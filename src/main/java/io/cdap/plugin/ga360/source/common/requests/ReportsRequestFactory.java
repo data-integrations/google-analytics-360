@@ -42,8 +42,7 @@ public class ReportsRequestFactory {
     List<String> metricsList = config.getMetricsList();
     List<Metric> metrics = metricsList.stream()
         .map(metric -> new Metric()
-            .setExpression(metric)
-            .setAlias(createAlias(metric)))
+            .setExpression(metric))
         .collect(Collectors.toList());
 
     // Create the Dimensions list.
@@ -63,9 +62,5 @@ public class ReportsRequestFactory {
       reportRequest.setSamplingLevel(config.getSampleSize());
     }
     return reportRequest;
-  }
-
-  private static String createAlias(String expression) {
-    return expression.replaceFirst("ga:", "");
   }
 }

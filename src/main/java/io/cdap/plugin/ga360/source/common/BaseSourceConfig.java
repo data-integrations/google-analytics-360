@@ -56,14 +56,12 @@ public class BaseSourceConfig extends ReferencePluginConfig {
   public void validate(FailureCollector failureCollector) {
     if (Strings.isNullOrEmpty(authorizationToken)) {
       failureCollector
-          .addFailure(String.format("%s must be not empty.", AUTHORIZATION_TOKEN),
-              String.format("Enter valid %s.", AUTHORIZATION_TOKEN))
+          .addFailure(String.format("%s must be specified.", AUTHORIZATION_TOKEN), null)
           .withConfigProperty(AUTHORIZATION_TOKEN);
     }
     if (Strings.isNullOrEmpty(viewId)) {
       failureCollector
-          .addFailure(String.format("%s must be not empty.", GOOGLE_ANALYTICS_VIEW),
-              String.format("Enter valid %s.", GOOGLE_ANALYTICS_VIEW))
+          .addFailure(String.format("%s must be specified.", GOOGLE_ANALYTICS_VIEW), null)
           .withConfigProperty(GOOGLE_ANALYTICS_VIEW);
     }
   }

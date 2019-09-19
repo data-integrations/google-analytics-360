@@ -45,7 +45,7 @@ public class GoogleAnalyticsRecordReader extends RecordReader<NullWritable, Repo
   private String nextPageToken = null;
 
   @Override
-  public void initialize(InputSplit inputSplit, TaskAttemptContext taskAttemptContext) {
+  public void initialize(InputSplit inputSplit, TaskAttemptContext taskAttemptContext) throws IOException {
     Configuration conf = taskAttemptContext.getConfiguration();
     String configJson = conf.get(GoogleAnalyticsFormatProvider.PROPERTY_CONFIG_JSON);
     GoogleAnalyticsConfig gaConfig = gson.fromJson(configJson, GoogleAnalyticsConfig.class);
@@ -68,9 +68,7 @@ public class GoogleAnalyticsRecordReader extends RecordReader<NullWritable, Repo
 
       currentReport = response.getReports().get(0);
     } catch (GeneralSecurityException e) {
-      e.printStackTrace(); // TODO handle or throw exception
-    } catch (IOException e) {
-      e.printStackTrace(); // TODO handle or throw exception
+      throw new IOException(e.getMessage(), e);
     }
   }
 

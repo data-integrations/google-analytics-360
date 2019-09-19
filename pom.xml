@@ -401,7 +401,6 @@
                     <instructions>
                         <Embed-Dependency>*;inline=false;scope=compile</Embed-Dependency>
                         <Embed-Transitive>true</Embed-Transitive>
-                        <_exportcontents>io.cdap.plugin.ga360.*</_exportcontents>
                         <Embed-Directory>lib</Embed-Directory>
                         <!--Only @Plugin classes in the export packages will be included as plugin-->
                         <_exportcontents>io.cdap.*</_exportcontents>

@@ -15,47 +15,55 @@
  */
 package io.cdap.plugin.ga360.source.common;
 
+import com.google.api.services.analyticsreporting.v4.model.DateRangeValues;
+import com.google.api.services.analyticsreporting.v4.model.MetricHeaderEntry;
 import com.google.api.services.analyticsreporting.v4.model.Report;
-import com.google.gson.JsonObject;
+import com.google.api.services.analyticsreporting.v4.model.ReportRow;
 import io.cdap.cdap.api.data.format.StructuredRecord;
 import io.cdap.cdap.api.data.schema.Schema;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
+import java.util.stream.IntStream;
 
 public class ReportTransformer {
 
   public static StructuredRecord transform(Report report, Schema schema) {
     StructuredRecord.Builder builder = StructuredRecord.builder(schema);
-    //TODO write transform logic
-//    JsonObject insightsJson = insights.getRawResponseAsJsonObject();
-//    insightsJson.entrySet().forEach(entry -> {
-//      if (schemaContainsField(schema, entry.getKey())) {
-//        Schema fieldSchema = schema.getField(entry.getKey()).getSchema();
-//
-//        if (fieldSchema.isNullable()) {
-//          fieldSchema = fieldSchema.getNonNullable();
-//        }
-//
-//        switch (fieldSchema.getType()) {
-//          case STRING:
-//            builder.set(entry.getKey(), entry.getValue().getAsJsonPrimitive().getAsString());
-//            break;
-//          case RECORD:
-//            builder.set(entry.getKey(), fromJsonObject(fieldSchema, entry.getValue().getAsJsonObject()));
-//            break;
-//          case ARRAY:
-//            Schema componentSchema = fieldSchema.getComponentSchema();
-//            List<StructuredRecord> records = StreamSupport
-//                .stream(entry.getValue().getAsJsonArray().spliterator(), false)
-//                .map(jsonElement -> fromJsonObject(componentSchema, jsonElement.getAsJsonObject()))
-//                .collect(Collectors.toList());
-//            builder.set(entry.getKey(), records);
-//            break;
-//        }
-//      }
-//    });
-
+    transformMetrics(report, schema, builder);
+    transformDimensions(report, schema, builder);
     return builder.build();
+  }
+
+  private static void transformMetrics(Report report, Schema schema, StructuredRecord.Builder builder) {
+    List<MetricHeaderEntry> metricHeaderEntries = report.getColumnHeader().getMetricHeader().getMetricHeaderEntries();
+    List<ReportRow> rows = report.getData().getRows();
+    rows.forEach(row -> {
+      List<DateRangeValues> rowMetrics = row.getMetrics();
+      IntStream.range(0, rowMetrics.size())
+          .forEach(i -> {
+            MetricHeaderEntry metricHeaderEntry = metricHeaderEntries.get(i);
+            if (schemaContainsField(schema, metricHeaderEntry.getName())) {
+              builder.set(metricHeaderEntry.getName(), rowMetrics.get(i).getValues().get(0)); //FIXME use date ranges for metrics
+            }
+          });
+    });
+  }
+
+  private static void transformDimensions(Report report, Schema schema, StructuredRecord.Builder builder) {
+    List<String> dimensions = report.getColumnHeader().getDimensions();
+    List<ReportRow> rows = report.getData().getRows();
+    rows.forEach(row -> {
+      List<String> rowDimensions = row.getDimensions();
+      IntStream.range(0, rowDimensions.size())
+          .forEach(i -> {
+            String columnHeader = dimensions.get(i);
+            if (schemaContainsField(schema, columnHeader)) {
+              builder.set(columnHeader, rowDimensions.get(i));
+            }
+          });
+    });
+  }
+
+  private static boolean schemaContainsField(Schema schema, String fieldName) {
+    return schema.getFields().stream().anyMatch(field -> field.getName().equals(fieldName));
   }
 }

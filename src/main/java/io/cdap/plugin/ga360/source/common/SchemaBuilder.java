@@ -28,7 +28,6 @@ import java.util.stream.Collectors;
 public class SchemaBuilder {
 
   public static Schema buildSchema(List<String> metrics, List<String> dimensions) {
-    //TODO how to build schema?
     Set<String> schemaFields = Sets.newHashSet(metrics);
     schemaFields.addAll(dimensions);
     return Schema.recordOf("GoogleAnalytics360Reports",
