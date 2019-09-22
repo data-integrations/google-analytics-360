@@ -39,29 +39,37 @@ public class GoogleAnalyticsConfig extends BaseSourceConfig {
   public static final String METRICS = "metricsList";
   public static final String DIMENSIONS = "dimensionsList";
   public static final String SAMPLING_LEVEL = "sampleSize";
+
   @Name(START_DATE)
   @Description("Start date for the report data")
+  @Nullable
   @Macro
   protected String startDate;
+
   @Name(END_DATE)
   @Description("End date for the report data")
+  @Nullable
   @Macro
   protected String endDate;
+
   @Name(METRICS)
   @Description("Quantitative measurements. For example, "
     + "the metric ga:users indicates the total number of users for the requested time period")
   @Macro
   protected String metricsList;
+
   @Name(DIMENSIONS)
   @Description("Attributes of your data. For example, "
     + "the dimension ga:city indicates the city, for example, \"Paris\" or \"New York\"")
   @Macro
   protected String dimensionsList;
+
   @Name(SAMPLING_LEVEL)
   @Description("Desired report sample size")
   @Nullable
   @Macro
   protected String sampleSize;
+
   private transient Schema schema = null;
 
   public GoogleAnalyticsConfig(String referenceName) {
@@ -75,12 +83,18 @@ public class GoogleAnalyticsConfig extends BaseSourceConfig {
     return schema;
   }
 
+  @Nullable
   public String getStartDate() {
     return startDate;
   }
 
+  @Nullable
   public String getEndDate() {
     return endDate;
+  }
+
+  public Boolean isDateRangeFilter() {
+    return startDate != null && endDate != null;
   }
 
   @Nullable
@@ -107,6 +121,19 @@ public class GoogleAnalyticsConfig extends BaseSourceConfig {
   @Override
   public void validate(FailureCollector failureCollector) {
     super.validate(failureCollector);
-    //TODO extend validation here
+
+    if (Strings.isNullOrEmpty(startDate) && !Strings.isNullOrEmpty(endDate)) {
+      failureCollector
+        .addFailure(String.format("Both %s and %s must be specified.", START_DATE, END_DATE),
+                    String.format("Specify %s or remove %s for using default date range.", START_DATE, END_DATE))
+        .withConfigProperty(START_DATE);
+    }
+
+    if (!Strings.isNullOrEmpty(startDate) && Strings.isNullOrEmpty(endDate)) {
+      failureCollector
+        .addFailure(String.format("Both %s and %s must be specified.", START_DATE, END_DATE),
+                    String.format("Specify %s or remove %s for using default date range.", END_DATE, START_DATE))
+        .withConfigProperty(END_DATE);
+    }
   }
 }

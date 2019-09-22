@@ -30,10 +30,12 @@ public class BaseSourceConfig extends ReferencePluginConfig {
 
   public static final String AUTHORIZATION_TOKEN = "authorizationToken";
   public static final String GOOGLE_ANALYTICS_VIEW = "viewId";
+
   @Name(AUTHORIZATION_TOKEN)
   @Description("Authorization token to access Google Analytics reporting API")
   @Macro
   protected String authorizationToken;
+
   @Name(GOOGLE_ANALYTICS_VIEW)
   @Description("The Google Analytics view ID from which to retrieve data")
   @Macro
