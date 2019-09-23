@@ -18,7 +18,7 @@ package io.cdap.plugin.ga360.source.common.requests;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.services.analyticsreporting.v4.AnalyticsReporting;
 import io.cdap.plugin.ga360.source.batch.GoogleAnalyticsBatchSource;
 
@@ -30,7 +30,7 @@ import java.security.GeneralSecurityException;
  */
 public class AnalyticsReportingInitializer {
 
-  private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
+  private static final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
 
   /**
    * Initializes an Analytics Reporting API V4 service object.

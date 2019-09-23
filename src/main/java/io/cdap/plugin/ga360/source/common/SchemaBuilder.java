@@ -33,7 +33,12 @@ public class SchemaBuilder {
     schemaFields.addAll(dimensions);
     return Schema.recordOf("GoogleAnalytics360Reports",
                            schemaFields.stream()
-                             .map(name -> Schema.Field.of(name, Schema.nullableOf(Schema.of(Schema.Type.STRING))))
+                             .map(name -> Schema.Field.of(mapGoogleAnalyticsFieldToAvro(name),
+                                                          Schema.nullableOf(Schema.of(Schema.Type.STRING))))
                              .collect(Collectors.toList()));
+  }
+
+  public static String mapGoogleAnalyticsFieldToAvro(String fieldName) {
+    return fieldName.substring(fieldName.indexOf(":") + 1);
   }
 }

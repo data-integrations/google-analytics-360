@@ -61,6 +61,7 @@ public class GoogleAnalyticsConfig extends BaseSourceConfig {
   @Name(DIMENSIONS)
   @Description("Attributes of your data. For example, "
     + "the dimension ga:city indicates the city, for example, \"Paris\" or \"New York\"")
+  @Nullable
   @Macro
   protected String dimensionsList;
 
@@ -93,10 +94,6 @@ public class GoogleAnalyticsConfig extends BaseSourceConfig {
     return endDate;
   }
 
-  public Boolean isDateRangeFilter() {
-    return startDate != null && endDate != null;
-  }
-
   @Nullable
   public String getSampleSize() {
     return sampleSize;
@@ -122,14 +119,15 @@ public class GoogleAnalyticsConfig extends BaseSourceConfig {
   public void validate(FailureCollector failureCollector) {
     super.validate(failureCollector);
 
-    if (Strings.isNullOrEmpty(startDate) && !Strings.isNullOrEmpty(endDate)) {
+    if ((!containsMacro(startDate) && Strings.isNullOrEmpty(startDate))
+      && !Strings.isNullOrEmpty(endDate)) {
       failureCollector
         .addFailure(String.format("Both %s and %s must be specified.", START_DATE, END_DATE),
                     String.format("Specify %s or remove %s for using default date range.", START_DATE, END_DATE))
         .withConfigProperty(START_DATE);
     }
 
-    if (!Strings.isNullOrEmpty(startDate) && Strings.isNullOrEmpty(endDate)) {
+    if (!Strings.isNullOrEmpty(startDate) && (!containsMacro(endDate) && Strings.isNullOrEmpty(endDate))) {
       failureCollector
         .addFailure(String.format("Both %s and %s must be specified.", START_DATE, END_DATE),
                     String.format("Specify %s or remove %s for using default date range.", END_DATE, START_DATE))

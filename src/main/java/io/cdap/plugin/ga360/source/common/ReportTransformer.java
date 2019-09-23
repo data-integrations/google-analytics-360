@@ -48,9 +48,10 @@ public class ReportTransformer {
       IntStream.range(0, rowMetrics.size())
         .forEach(i -> {
           MetricHeaderEntry metricHeaderEntry = metricHeaderEntries.get(i);
-          if (schemaContainsField(schema, metricHeaderEntry.getName())) {
+          String name = SchemaBuilder.mapGoogleAnalyticsFieldToAvro(metricHeaderEntry.getName());
+          if (schemaContainsField(schema, name)) {
             //TODO use date ranges for metrics
-            builder.set(metricHeaderEntry.getName(), rowMetrics.get(i).getValues().get(0));
+            builder.set(name, rowMetrics.get(i).getValues().get(0));
           }
         });
     });
@@ -63,7 +64,7 @@ public class ReportTransformer {
       List<String> rowDimensions = row.getDimensions();
       IntStream.range(0, rowDimensions.size())
         .forEach(i -> {
-          String columnHeader = dimensions.get(i);
+          String columnHeader = SchemaBuilder.mapGoogleAnalyticsFieldToAvro(dimensions.get(i));
           if (schemaContainsField(schema, columnHeader)) {
             builder.set(columnHeader, rowDimensions.get(i));
           }

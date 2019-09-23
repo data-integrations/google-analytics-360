@@ -54,12 +54,12 @@ public class BaseSourceConfig extends ReferencePluginConfig {
   }
 
   public void validate(FailureCollector failureCollector) {
-    if (Strings.isNullOrEmpty(authorizationToken)) {
+    if (!containsMacro(authorizationToken) && Strings.isNullOrEmpty(authorizationToken)) {
       failureCollector
         .addFailure(String.format("%s must be specified.", AUTHORIZATION_TOKEN), null)
         .withConfigProperty(AUTHORIZATION_TOKEN);
     }
-    if (Strings.isNullOrEmpty(viewId)) {
+    if (!containsMacro(viewId) && Strings.isNullOrEmpty(viewId)) {
       failureCollector
         .addFailure(String.format("%s must be specified.", GOOGLE_ANALYTICS_VIEW), null)
         .withConfigProperty(GOOGLE_ANALYTICS_VIEW);
