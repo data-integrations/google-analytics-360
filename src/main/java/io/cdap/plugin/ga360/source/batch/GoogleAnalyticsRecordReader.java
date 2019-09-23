@@ -69,7 +69,7 @@ public class GoogleAnalyticsRecordReader extends RecordReader<NullWritable, Repo
 
       currentReport = response.getReports().get(0);
     } catch (GeneralSecurityException e) {
-      throw new IOException(e.getMessage(), e);
+      throw new IllegalStateException(e.getMessage(), e);
     }
   }
 
