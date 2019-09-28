@@ -118,12 +118,12 @@
           <artifactId>curator-recipes</artifactId>
         </exclusion>
         <exclusion>
-          <groupId>org.tachyonproject</groupId>
-          <artifactId>tachyon-client</artifactId>
+          <groupId>org.scala-lang</groupId>
+          <artifactId>scala-compiler</artifactId>
         </exclusion>
         <exclusion>
           <groupId>org.scala-lang</groupId>
-          <artifactId>scala-compiler</artifactId>
+          <artifactId>scala-reflect</artifactId>
         </exclusion>
         <exclusion>
           <groupId>org.eclipse.jetty.orbit</groupId>
@@ -133,7 +133,25 @@
           <groupId>com.fasterxml.jackson.core</groupId>
           <artifactId>jackson-databind</artifactId>
         </exclusion>
+        <!--
+  Need to exclude this since Spark brings in an older version that makes
+  S3 not work in local sandbox. This doesn't affect distributed mode.
+-->
+        <exclusion>
+          <groupId>net.java.dev.jets3t</groupId>
+          <artifactId>jets3t</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>asm</groupId>
+          <artifactId>asm</artifactId>
+        </exclusion>
       </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.spark</groupId>
+      <artifactId>spark-streaming_2.11</artifactId>
+      <version>${spark.version}</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.hadoop</groupId>
@@ -381,6 +399,7 @@
         <configuration>
           <cdapArtifacts>
             <parent>system:cdap-data-pipeline[6.1.0-SNAPSHOT,7.0.0-SNAPSHOT)</parent>
+            <parent>system:cdap-data-streams[6.1.0-SNAPSHOT,7.0.0-SNAPSHOT)</parent>
           </cdapArtifacts>
         </configuration>
         <executions>

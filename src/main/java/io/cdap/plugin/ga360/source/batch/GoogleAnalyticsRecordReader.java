@@ -33,6 +33,7 @@ import org.apache.hadoop.mapreduce.TaskAttemptContext;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -42,15 +43,22 @@ import java.util.List;
 public class GoogleAnalyticsRecordReader extends RecordReader<NullWritable, Report> {
 
   private static final Gson gson = new GsonBuilder().create();
+
+  private GoogleAnalyticsBatchSourceConfig gaConfig;
+  private Iterator<Report> reportIterator;
   private Report currentReport;
-  private String nextPageToken = null;
+  private String nextPageToken;
+
 
   @Override
-  public void initialize(InputSplit inputSplit, TaskAttemptContext taskAttemptContext) throws IOException {
+  public void initialize(InputSplit inputSplit, TaskAttemptContext taskAttemptContext) {
     Configuration conf = taskAttemptContext.getConfiguration();
     String configJson = conf.get(GoogleAnalyticsFormatProvider.PROPERTY_CONFIG_JSON);
-    GoogleAnalyticsConfig gaConfig = gson.fromJson(configJson, GoogleAnalyticsConfig.class);
+    gaConfig = gson.fromJson(configJson, GoogleAnalyticsBatchSourceConfig.class);
+    reportIterator = requestNextReports();
+  }
 
+  private Iterator<Report> requestNextReports() {
     try {
       ReportRequest reportRequest = ReportsRequestFactory.createRequest(gaConfig);
       reportRequest.setPageToken(nextPageToken);
@@ -67,16 +75,25 @@ public class GoogleAnalyticsRecordReader extends RecordReader<NullWritable, Repo
         .setAccessToken(gaConfig.getAuthorizationToken())
         .execute();
 
-      currentReport = response.getReports().get(0);
-    } catch (GeneralSecurityException e) {
+      return response.getReports().iterator();
+    } catch (GeneralSecurityException | IOException e) {
       throw new IllegalStateException(e.getMessage(), e);
     }
   }
 
   @Override
   public boolean nextKeyValue() {
-    nextPageToken = currentReport.getNextPageToken();
-    return !Strings.isNullOrEmpty(nextPageToken);
+    if (!reportIterator.hasNext()) {
+      nextPageToken = currentReport.getNextPageToken();
+      if (!Strings.isNullOrEmpty(nextPageToken)) {
+        reportIterator = requestNextReports();
+        return nextKeyValue();
+      }
+      return false;
+    } else {
+      currentReport = reportIterator.next();
+      return true;
+    }
   }
 
   @Override

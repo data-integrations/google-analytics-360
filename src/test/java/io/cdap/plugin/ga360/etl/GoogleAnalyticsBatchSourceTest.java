@@ -29,7 +29,7 @@ import org.junit.Test;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import static io.cdap.plugin.ga360.source.batch.GoogleAnalyticsConfig.METRICS;
+import static io.cdap.plugin.ga360.source.batch.GoogleAnalyticsBatchSourceConfig.METRICS;
 import static io.cdap.plugin.ga360.source.common.BaseSourceConfig.AUTHORIZATION_TOKEN;
 import static io.cdap.plugin.ga360.source.common.BaseSourceConfig.GOOGLE_ANALYTICS_VIEW;
 
@@ -42,7 +42,7 @@ public class GoogleAnalyticsBatchSourceTest extends HydratorTestBase {
 
   @BeforeClass
   public static void setupTestClass() throws Exception {
-    // initialize fb api
+    // initialize google analytics api
     authorizationToken = System.getProperty(AUTHORIZATION_TOKEN);
     if (Strings.isNullOrEmpty(authorizationToken)) {
       throw new IllegalArgumentException(String.format("%s system property must not be empty.", AUTHORIZATION_TOKEN));

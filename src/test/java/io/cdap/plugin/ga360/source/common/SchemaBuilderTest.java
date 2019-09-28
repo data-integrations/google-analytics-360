@@ -15,9 +15,13 @@ public class SchemaBuilderTest {
   public void testBuildSchemaCaseNotEmpty() {
     //given
     String givenMetric1 = "ga:users";
+    String mappedMetric1 = SchemaBuilder.mapGoogleAnalyticsFieldToAvro(givenMetric1);
     String givenMetric2 = "ga:dcmCost";
+    String mappedMetric2 = SchemaBuilder.mapGoogleAnalyticsFieldToAvro(givenMetric2);
     String givenDimension1 = "ga:userType";
+    String mappedDimension1 = SchemaBuilder.mapGoogleAnalyticsFieldToAvro(givenDimension1);
     String givenDimension2 = "ga:sessionCount";
+    String mappedDimension2 = SchemaBuilder.mapGoogleAnalyticsFieldToAvro(givenDimension2);
     List<String> givenMetrics = Arrays.asList(givenMetric1, givenMetric2);
     List<String> givenDimensions = Arrays.asList(givenDimension1, givenDimension2);
 
@@ -26,14 +30,14 @@ public class SchemaBuilderTest {
 
     //then
     Assert.assertNotNull(schema);
-    Assert.assertEquals(givenMetric1, Objects.requireNonNull(schema.getField(givenMetric1)).getName());
-    Assert.assertEquals(givenMetric2, Objects.requireNonNull(schema.getField(givenMetric2)).getName());
-    Assert.assertEquals(givenDimension1, Objects.requireNonNull(schema.getField(givenDimension1)).getName());
-    Assert.assertEquals(givenDimension2, Objects.requireNonNull(schema.getField(givenDimension2)).getName());
+    Assert.assertEquals(mappedMetric1, Objects.requireNonNull(schema.getField(mappedMetric1)).getName());
+    Assert.assertEquals(mappedMetric2, Objects.requireNonNull(schema.getField(mappedMetric2)).getName());
+    Assert.assertEquals(mappedDimension1, Objects.requireNonNull(schema.getField(mappedDimension1)).getName());
+    Assert.assertEquals(mappedDimension2, Objects.requireNonNull(schema.getField(mappedDimension2)).getName());
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void tesBuildSchemaCaseEmpty() {
+  public void testBuildSchemaCaseEmpty() {
     //when
     SchemaBuilder.buildSchema(new ArrayList<>(), new ArrayList<>());
   }

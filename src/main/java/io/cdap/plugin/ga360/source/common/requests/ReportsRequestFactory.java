@@ -19,7 +19,7 @@ import com.google.api.services.analyticsreporting.v4.model.DateRange;
 import com.google.api.services.analyticsreporting.v4.model.Dimension;
 import com.google.api.services.analyticsreporting.v4.model.Metric;
 import com.google.api.services.analyticsreporting.v4.model.ReportRequest;
-import io.cdap.plugin.ga360.source.batch.GoogleAnalyticsConfig;
+import io.cdap.plugin.ga360.source.batch.GoogleAnalyticsBatchSourceConfig;
 
 import java.util.Collections;
 import java.util.List;
@@ -33,7 +33,7 @@ public class ReportsRequestFactory {
   /**
    * Creates reports request.
    */
-  public static ReportRequest createRequest(GoogleAnalyticsConfig config) {
+  public static ReportRequest createRequest(GoogleAnalyticsBatchSourceConfig config) {
     // Create the DateRange object.
     DateRange dateRange = new DateRange();
     dateRange.setStartDate(config.getStartDate());

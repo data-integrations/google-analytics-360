@@ -29,9 +29,10 @@ public class GoogleAnalyticsFormatProvider implements InputFormatProvider {
 
   public static final String PROPERTY_CONFIG_JSON = "cdap.ga.config";
   private static final Gson gson = new GsonBuilder().create();
+
   private final Map<String, String> conf;
 
-  public GoogleAnalyticsFormatProvider(GoogleAnalyticsConfig config) {
+  public GoogleAnalyticsFormatProvider(GoogleAnalyticsBatchSourceConfig config) {
     this.conf = new ImmutableMap.Builder<String, String>()
       .put(PROPERTY_CONFIG_JSON, gson.toJson(config))
       .build();

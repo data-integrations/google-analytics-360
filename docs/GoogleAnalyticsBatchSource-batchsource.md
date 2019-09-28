@@ -24,6 +24,6 @@ Properties
 
 **Dimensions:** Attributes of your data. For example, the dimension ga:city indicates the city, for example, "Paris" or "New York".
 
-### Advanced (for batch only)
+### Advanced
 
 **Sampling Level:** Desired report sample size.

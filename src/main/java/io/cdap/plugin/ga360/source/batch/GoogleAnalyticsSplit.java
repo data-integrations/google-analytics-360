@@ -27,6 +27,9 @@ import java.io.DataOutput;
  */
 public class GoogleAnalyticsSplit extends InputSplit implements Writable {
 
+  public GoogleAnalyticsSplit() {
+  }
+
   @Override
   public void write(DataOutput dataOutput) {
 

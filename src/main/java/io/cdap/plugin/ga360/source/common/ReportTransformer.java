@@ -62,13 +62,15 @@ public class ReportTransformer {
     List<ReportRow> rows = report.getData().getRows();
     rows.forEach(row -> {
       List<String> rowDimensions = row.getDimensions();
-      IntStream.range(0, rowDimensions.size())
-        .forEach(i -> {
-          String columnHeader = SchemaBuilder.mapGoogleAnalyticsFieldToAvro(dimensions.get(i));
-          if (schemaContainsField(schema, columnHeader)) {
-            builder.set(columnHeader, rowDimensions.get(i));
-          }
-        });
+      if (rowDimensions != null) {
+        IntStream.range(0, rowDimensions.size())
+          .forEach(i -> {
+            String columnHeader = SchemaBuilder.mapGoogleAnalyticsFieldToAvro(dimensions.get(i));
+            if (schemaContainsField(schema, columnHeader)) {
+              builder.set(columnHeader, rowDimensions.get(i));
+            }
+          });
+      }
     });
   }
 

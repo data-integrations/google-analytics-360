@@ -29,6 +29,7 @@ import io.cdap.cdap.etl.api.FailureCollector;
 import io.cdap.cdap.etl.api.PipelineConfigurer;
 import io.cdap.cdap.etl.api.batch.BatchSource;
 import io.cdap.cdap.etl.api.batch.BatchSourceContext;
+import io.cdap.plugin.common.IdUtils;
 import io.cdap.plugin.common.LineageRecorder;
 import io.cdap.plugin.ga360.source.common.ReportTransformer;
 import org.apache.hadoop.io.NullWritable;
@@ -43,15 +44,16 @@ import java.util.stream.Collectors;
 @Description("Reads data from Google Analytics Reporting API")
 public class GoogleAnalyticsBatchSource extends BatchSource<NullWritable, Report, StructuredRecord> {
 
-  public static final String NAME = "GoogleAnalytics360";
+  public static final String NAME = "GoogleAnalyticsBatchSource";
 
-  private final GoogleAnalyticsConfig config;
+  private final GoogleAnalyticsBatchSourceConfig config;
 
-  public GoogleAnalyticsBatchSource(GoogleAnalyticsConfig config) {
+  public GoogleAnalyticsBatchSource(GoogleAnalyticsBatchSourceConfig config) {
     this.config = config;
   }
 
   public void prepareRun(BatchSourceContext batchSourceContext) {
+    validateConfiguration(batchSourceContext.getFailureCollector());
     LineageRecorder lineageRecorder = new LineageRecorder(batchSourceContext, config.referenceName);
     lineageRecorder.createExternalDataset(config.getSchema());
     lineageRecorder.recordRead("Read", "Reading Google Analytics reports",
@@ -64,14 +66,18 @@ public class GoogleAnalyticsBatchSource extends BatchSource<NullWritable, Report
 
   @Override
   public void configurePipeline(PipelineConfigurer pipelineConfigurer) {
-    FailureCollector failureCollector = pipelineConfigurer.getStageConfigurer().getFailureCollector();
-    config.validate(failureCollector);
-    failureCollector.getOrThrowException();
+    IdUtils.validateId(config.referenceName);
+    validateConfiguration(pipelineConfigurer.getStageConfigurer().getFailureCollector());
     pipelineConfigurer.getStageConfigurer().setOutputSchema(config.getSchema());
   }
 
   @Override
   public void transform(KeyValue<NullWritable, Report> input, Emitter<StructuredRecord> emitter) {
     emitter.emit(ReportTransformer.transform(input.getValue(), config.getSchema()));
+  }
+
+  private void validateConfiguration(FailureCollector failureCollector) {
+    config.validate(failureCollector);
+    failureCollector.getOrThrowException();
   }
 }
