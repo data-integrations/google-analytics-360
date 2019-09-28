@@ -30,7 +30,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 /**
- * Base configuration for facebook sources.
+ * Base configuration for Google Analytics sources.
  */
 public class BaseSourceConfig extends ReferencePluginConfig {
 
