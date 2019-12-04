@@ -1,0 +1,252 @@
+{
+  "metadata": {
+    "spec-version": "1.0"
+  },
+  "configuration-groups": [
+    {
+      "label": "Basic",
+      "properties": [
+        {
+          "widget-type": "textbox",
+          "label": "Reference Name",
+          "name": "referenceName",
+          "widget-attributes": {
+            "placeholder": "Name used to identify this source for lineage"
+          }
+        },
+        {
+          "widget-type": "textbox",
+          "label": "Google Analytics View",
+          "name": "viewId",
+          "widget-attributes": {
+            "placeholder": "The Google Analytics view ID from which the data is retrieved"
+          }
+        },
+        {
+          "widget-type": "textbox",
+          "label": "Start Date",
+          "name": "startDate",
+          "widget-attributes": {
+            "placeholder": "Start date for the report data"
+          }
+        },
+        {
+          "widget-type": "textbox",
+          "label": "End Date",
+          "name": "endDate",
+          "widget-attributes": {
+            "placeholder": "End date for the report data"
+          }
+        },
+        {
+          "widget-type": "multi-select",
+          "label": "Metrics",
+          "name": "metricsList",
+          "widget-attributes": {
+            "delimiter": ",",
+            "options": [
+              {
+                "id": "rt:activeUsers",
+                "label": "Active users"
+              },
+              {
+                "id": "rt:goalXXValue",
+                "label": "Goal XX value"
+              },
+              {
+                "id": "rt:goalValueAll",
+                "label": "Goal value all"
+              },
+              {
+                "id": "rt:goalXXCompletions",
+                "label": "Goal XX completions"
+              },
+              {
+                "id": "rt:goalCompletionsAll",
+                "label": "Goal completions all"
+              },
+              {
+                "id": "rt:pageviews",
+                "label": "Page views"
+              },
+              {
+                "id": "rt:screenViews",
+                "label": "Screen views"
+              },
+              {
+                "id": "rt:totalEvents",
+                "label": "Total events"
+              }
+            ]
+          }
+        },
+        {
+          "widget-type": "multi-select",
+          "label": "Dimensions",
+          "name": "dimensionsList",
+          "widget-attributes": {
+            "delimiter": ",",
+            "options": [
+              {
+                "id": "rt:userType",
+                "label": "User Type"
+              },
+              {
+                "id": "rt:minutesAgo",
+                "label": "Minutes ago"
+              },
+              {
+                "id": "rt:referralPath",
+                "label": "Referral path"
+              },
+              {
+                "id": "rt:campaign",
+                "label": "Campaign"
+              },
+              {
+                "id": "rt:source",
+                "label": "Source"
+              },
+              {
+                "id": "rt:medium",
+                "label": "Medium"
+              },
+              {
+                "id": "rt:trafficType",
+                "label": "Traffic type"
+              },
+              {
+                "id": "rt:keyword",
+                "label": "Keyword"
+              },
+              {
+                "id": "rt:goalId",
+                "label": "Goal id"
+              },
+              {
+                "id": "rt:browser",
+                "label": "Browser"
+              },
+              {
+                "id": "rt:browserVersion",
+                "label": "Browser version"
+              },
+              {
+                "id": "rt:operatingSystem",
+                "label": "Operating system"
+              },
+              {
+                "id": "rt:operatingSystemVersion",
+                "label": "Operating system version"
+              },
+              {
+                "id": "rt:deviceCategory",
+                "label": "Device category"
+              },
+              {
+                "id": "rt:mobileDeviceBranding",
+                "label": "Mobile device branding"
+              },
+              {
+                "id": "rt:mobileDeviceModel",
+                "label": "Mobile device model"
+              },
+              {
+                "id": "rt:country",
+                "label": "Country"
+              },
+              {
+                "id": "rt:region",
+                "label": "Region"
+              },
+              {
+                "id": "rt:city",
+                "label": "City"
+              },
+              {
+                "id": "rt:latitude",
+                "label": "Latitude"
+              },
+              {
+                "id": "rt:longitude",
+                "label": "Longitude"
+              },
+              {
+                "id": "rt:pagePath",
+                "label": "Page path"
+              },
+              {
+                "id": "rt:pageTitle",
+                "label": "Page title"
+              },
+              {
+                "id": "rt:appName",
+                "label": "App name"
+              },
+              {
+                "id": "rt:appVersion",
+                "label": "App version"
+              },
+              {
+                "id": "rt:screenName",
+                "label": "Screen name"
+              },
+              {
+                "id": "rt:eventAction",
+                "label": "Event action"
+              },
+              {
+                "id": "rt:eventCategory",
+                "label": "Event category"
+              },
+              {
+                "id": "rt:eventLabel",
+                "label": "Event label"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "label": "Advanced",
+      "properties": [
+        {
+          "widget-type": "number",
+          "label": "Poll interval",
+          "name": "pollInterval",
+          "widget-attributes": {
+            "default": "1"
+          }
+        }
+      ]
+    },
+    {
+      "label": "Credentials",
+      "properties": [
+        {
+          "widget-type": "textbox",
+          "label": "Authorization token",
+          "name": "authorizationToken",
+          "widget-attributes": {
+            "placeholder": "Authorization token to access Google Analytics reporting API"
+          }
+        }
+      ]
+    }
+  ],
+  "jump-config": {
+    "datasets": [
+      {
+        "ref-property-name": "referenceName"
+      }
+    ]
+  },
+  "outputs": [
+    {
+      "widget-type": "non-editable-schema-editor",
+      "schema": {
+      }
+    }
+  ]
+}
