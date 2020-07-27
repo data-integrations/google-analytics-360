@@ -1,5 +1,5 @@
 /*
- * Copyright © 2019 Cask Data, Inc.
+ * Copyright © 2020 Cask Data, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -82,6 +82,10 @@ public class BaseSourceConfig extends ReferencePluginConfig {
     super(referenceName);
   }
 
+  /**
+   * Return the Schema.
+   * @return the Schema
+   */
   public Schema getSchema() {
     if (schema == null) {
       schema = SchemaBuilder.buildSchema(getMetricsList(), getDimensionsList());
@@ -108,6 +112,10 @@ public class BaseSourceConfig extends ReferencePluginConfig {
   }
 
 
+  /**
+   * Return the list of string for metrics.
+   * @return the list of string for metrics
+   */
   public List<String> getMetricsList() {
     if (!Strings.isNullOrEmpty(metricsList)) {
       return Arrays.asList(metricsList.split(","));
@@ -116,6 +124,10 @@ public class BaseSourceConfig extends ReferencePluginConfig {
     }
   }
 
+  /**
+   * Return the list of string for dimensions.
+   * @return the list of string for dimensions
+   */
   public List<String> getDimensionsList() {
     if (!Strings.isNullOrEmpty(dimensionsList)) {
       return Arrays.asList(dimensionsList.split(","));
@@ -125,6 +137,10 @@ public class BaseSourceConfig extends ReferencePluginConfig {
   }
 
 
+  /**
+   * Verifies required details of base source configuration for Google Analytics.
+   * @param failureCollector the failure collector
+   */
   public void validate(FailureCollector failureCollector) {
     if (!containsMacro(authorizationToken) && Strings.isNullOrEmpty(authorizationToken)) {
       failureCollector

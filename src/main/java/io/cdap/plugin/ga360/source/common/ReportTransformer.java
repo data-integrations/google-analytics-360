@@ -1,5 +1,5 @@
 /*
- * Copyright © 2019 Cask Data, Inc.
+ * Copyright © 2020 Cask Data, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -23,6 +23,7 @@ import com.google.api.services.analyticsreporting.v4.model.ReportRow;
 import io.cdap.cdap.api.data.format.StructuredRecord;
 import io.cdap.cdap.api.data.schema.Schema;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -42,13 +43,19 @@ public class ReportTransformer {
     List<MetricHeaderEntry> metricHeaderEntries = report.getColumnHeader().getMetricHeader().getMetricHeaderEntries();
     List<String> dimensions = report.getColumnHeader().getDimensions();
     List<ReportRow> rows = report.getData().getRows();
-    List<StructuredRecord> records = rows.stream()
+    List<StructuredRecord> records = rows == null ? Collections.emptyList() : rows.stream()
       .map(row -> transformRow(row, metricHeaderEntries, dimensions, schema))
       .collect(Collectors.toList());
     builder.set("rows", records);
     return builder.build();
   }
 
+  /**
+   * Return the StructuredRecord.
+   * @param realtimeData the realtimeData
+   * @param schema the schema
+   * @return the StructuredRecord
+   */
   public static StructuredRecord transform(RealtimeData realtimeData, Schema schema) {
     StructuredRecord.Builder builder = StructuredRecord.builder(schema);
     transformData(realtimeData, schema, builder);

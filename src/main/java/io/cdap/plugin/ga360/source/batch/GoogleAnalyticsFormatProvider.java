@@ -1,5 +1,5 @@
 /*
- * Copyright © 2019 Cask Data, Inc.
+ * Copyright © 2020 Cask Data, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -23,7 +23,7 @@ import io.cdap.cdap.api.data.batch.InputFormatProvider;
 import java.util.Map;
 
 /**
- * InputFormatProvider used by cdap to provide configurations to mapreduce job
+ * InputFormatProvider used by cdap to provide configurations to mapreduce job.
  */
 public class GoogleAnalyticsFormatProvider implements InputFormatProvider {
 
@@ -32,6 +32,10 @@ public class GoogleAnalyticsFormatProvider implements InputFormatProvider {
 
   private final Map<String, String> conf;
 
+  /**
+   * Constructor for GoogleAnalyticsFormatProvider object.
+   * @param config the google analytics batch source configuration
+   */
   public GoogleAnalyticsFormatProvider(GoogleAnalyticsBatchSourceConfig config) {
     this.conf = new ImmutableMap.Builder<String, String>()
       .put(PROPERTY_CONFIG_JSON, GSON.toJson(config))
