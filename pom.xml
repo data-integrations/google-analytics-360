@@ -72,7 +72,7 @@
     <hydrator.version>2.3.0-SNAPSHOT</hydrator.version>
     <junit.version>4.11</junit.version>
     <mockito.version>1.10.19</mockito.version>
-    <spark.version>2.3.1</spark.version>
+    <spark.version>2.4.6</spark.version>
     <google-analytics-v4.version>v4-rev153-1.25.0</google-analytics-v4.version>
     <google-analytics-v3.version>v3-rev161-1.25.0</google-analytics-v3.version>
     <google-http-client-gson.version>1.32.1</google-http-client-gson.version>
