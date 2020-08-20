@@ -22,7 +22,7 @@
   <groupId>io.cdap.plugin</groupId>
   <artifactId>google-analytics-360-plugin</artifactId>
   <name>Google Analytics 360 plugin</name>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.0.0</version>
   <description>A collection of Google Analytics 360 connectors and plugins</description>
   <url>https://github.com/data-integrations/google-analytics-360</url>
 
@@ -67,9 +67,9 @@
     <app.parents>system:cdap-data-pipeline[4.0.0,7.0.0),system:cdap-data-streams[4.0.0,7.0.0)</app.parents>
     <!-- this is here because project.basedir evaluates to null in the script build step -->
     <main.basedir>${project.basedir}</main.basedir>
-    <cdap.version>6.1.0-SNAPSHOT</cdap.version>
+    <cdap.version>6.1.2</cdap.version>
     <hadoop.version>2.3.0</hadoop.version>
-    <hydrator.version>2.3.0-SNAPSHOT</hydrator.version>
+    <hydrator.version>2.3.5</hydrator.version>
     <junit.version>4.11</junit.version>
     <mockito.version>1.10.19</mockito.version>
     <spark.version>2.3.1</spark.version>
@@ -408,8 +408,8 @@
         <version>1.1.0</version>
         <configuration>
           <cdapArtifacts>
-            <parent>system:cdap-data-pipeline[6.1.0-SNAPSHOT,7.0.0-SNAPSHOT)</parent>
-            <parent>system:cdap-data-streams[6.1.0-SNAPSHOT,7.0.0-SNAPSHOT)</parent>
+            <parent>system:cdap-data-pipeline[6.1.2,7.0.0-SNAPSHOT)</parent>
+            <parent>system:cdap-data-streams[6.1.2,7.0.0-SNAPSHOT)</parent>
           </cdapArtifacts>
         </configuration>
         <executions>
