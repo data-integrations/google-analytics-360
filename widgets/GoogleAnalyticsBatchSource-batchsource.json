@@ -2115,11 +2115,5 @@
       }
     ]
   },
-  "outputs": [
-    {
-      "widget-type": "non-editable-schema-editor",
-      "schema": {
-      }
-    }
-  ]
+  "outputs": []
 }
