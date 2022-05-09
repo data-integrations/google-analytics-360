@@ -22,7 +22,7 @@
   <groupId>io.cdap.plugin</groupId>
   <artifactId>google-analytics-360-plugin</artifactId>
   <name>Google Analytics 360 plugin</name>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
   <description>A collection of Google Analytics 360 connectors and plugins</description>
   <url>https://github.com/data-integrations/google-analytics-360</url>
 
