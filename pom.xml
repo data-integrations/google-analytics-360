@@ -77,7 +77,7 @@
     <google-analytics-v3.version>v3-rev161-1.25.0</google-analytics-v3.version>
     <google-http-client-gson.version>1.32.1</google-http-client-gson.version>
   </properties>
-  
+
   <dependencies>
     <dependency>
       <groupId>io.cdap.cdap</groupId>
@@ -235,6 +235,10 @@
       <version>${hadoop.version}</version>
       <scope>provided</scope>
       <exclusions>
+        <exclusion>
+          <groupId>log4j</groupId>
+          <artifactId>log4j</artifactId>
+        </exclusion>
         <exclusion>
           <groupId>org.slf4j</groupId>
           <artifactId>slf4j-log4j12</artifactId>
