@@ -70,7 +70,7 @@
     <cdap.version>6.8.0</cdap.version>
     <hadoop.version>2.10.2</hadoop.version>
     <hydrator.version>2.10.0</hydrator.version>
-    <junit.version>4.11</junit.version>
+    <junit.version>4.13.1</junit.version>
     <mockito.version>1.10.19</mockito.version>
     <spark.version>2.3.1</spark.version>
     <google-analytics-v4.version>v4-rev153-1.25.0</google-analytics-v4.version>
